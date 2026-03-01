@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demonstração de Paletas - Pagni & Golegã</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #f0f0f0; }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+    .intro { text-align: center; padding: 40px 20px; background: white; margin-bottom: 30px; border-radius: 12px; }
+    .intro h1 { font-size: 2rem; margin-bottom: 10px; }
+    .intro p { color: #666; }
+
+    .palette-section { margin-bottom: 40px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+    .palette-label { padding: 15px 20px; color: white; font-weight: 600; font-size: 1.1rem; display: flex; justify-content: space-between; align-items: center; }
+    .palette-label span { font-size: 0.85rem; opacity: 0.9; font-weight: 400; }
+
+    /* Demo components */
+    .demo-header { padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; }
+    .demo-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; }
+    .demo-nav { display: flex; gap: 25px; font-size: 0.9rem; }
+    .demo-nav a { text-decoration: none; }
+
+    .demo-hero { padding: 60px 30px; text-align: center; }
+    .demo-hero h2 { font-size: 2.2rem; margin-bottom: 15px; }
+    .demo-hero p { font-size: 1.1rem; margin-bottom: 25px; opacity: 0.85; }
+    .demo-btn { display: inline-block; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.95rem; margin: 0 8px; transition: all 0.2s; }
+    .demo-btn:hover { transform: translateY(-2px); }
+
+    .demo-cards { padding: 40px 30px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .demo-card { padding: 25px; border-radius: 10px; }
+    .demo-card h3 { font-size: 1.1rem; margin-bottom: 10px; }
+    .demo-card p { font-size: 0.9rem; line-height: 1.5; }
+
+    .demo-footer { padding: 30px; text-align: center; font-size: 0.85rem; }
+
+    /* Color swatches */
+    .swatches { display: flex; gap: 10px; padding: 15px 30px; flex-wrap: wrap; }
+    .swatch { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; }
+    .swatch-color { width: 24px; height: 24px; border-radius: 4px; border: 1px solid rgba(0,0,0,0.1); }
+
+    /* ===== PALETA 1: Naval + Dourado ===== */
+    .p1-label { background: #1a2a5e; }
+    .p1-header { background: white; border-bottom: 1px solid #e5e7eb; }
+    .p1-logo { color: #1a2a5e; }
+    .p1-nav a { color: #4b5563; }
+    .p1-nav a:hover { color: #c9a227; }
+    .p1-hero { background: linear-gradient(135deg, #1a2a5e 0%, #2d3a6e 100%); color: white; }
+    .p1-btn-primary { background: #c9a227; color: #1a2a5e; }
+    .p1-btn-primary:hover { background: #d4b23a; }
+    .p1-btn-secondary { background: transparent; border: 2px solid rgba(255,255,255,0.4); color: white; }
+    .p1-cards { background: #f5f5f5; }
+    .p1-card { background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .p1-card h3 { color: #1a2a5e; }
+    .p1-card p { color: #6b7280; }
+    .p1-footer { background: #1a2a5e; color: rgba(255,255,255,0.7); }
+    .p1-swatches { background: white; }
+
+    /* ===== PALETA 2: Naval + Prata ===== */
+    .p2-label { background: #1a2a5e; }
+    .p2-header { background: white; border-bottom: 1px solid #e2e8f0; }
+    .p2-logo { color: #1a2a5e; }
+    .p2-nav a { color: #64748b; }
+    .p2-nav a:hover { color: #1a2a5e; }
+    .p2-hero { background: linear-gradient(135deg, #1a2a5e 0%, #2d3a6e 100%); color: white; }
+    .p2-btn-primary { background: white; color: #1a2a5e; }
+    .p2-btn-primary:hover { background: #f8fafc; }
+    .p2-btn-secondary { background: transparent; border: 2px solid #9ca3af; color: white; }
+    .p2-cards { background: #f8fafc; }
+    .p2-card { background: white; border: 1px solid #e2e8f0; }
+    .p2-card h3 { color: #1a2a5e; }
+    .p2-card p { color: #64748b; }
+    .p2-footer { background: #0f172a; color: #9ca3af; }
+    .p2-swatches { background: white; }
+
+    /* ===== PALETA 3: Naval + Esmeralda ===== */
+    .p3-label { background: #1a2a5e; }
+    .p3-header { background: white; border-bottom: 1px solid #e5e7eb; }
+    .p3-logo { color: #1a2a5e; }
+    .p3-nav a { color: #4b5563; }
+    .p3-nav a:hover { color: #047857; }
+    .p3-hero { background: linear-gradient(135deg, #1a2a5e 0%, #1e3a5f 100%); color: white; }
+    .p3-btn-primary { background: #047857; color: white; }
+    .p3-btn-primary:hover { background: #059669; }
+    .p3-btn-secondary { background: transparent; border: 2px solid rgba(255,255,255,0.4); color: white; }
+    .p3-cards { background: #f0fdf4; }
+    .p3-card { background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .p3-card h3 { color: #1a2a5e; }
+    .p3-card p { color: #6b7280; }
+    .p3-footer { background: #1a2a5e; color: rgba(255,255,255,0.7); }
+    .p3-swatches { background: white; }
+
+    /* ===== PALETA 4: Preto + Dourado ===== */
+    .p4-label { background: #0a0a0a; }
+    .p4-header { background: #0a0a0a; border-bottom: 1px solid #262626; }
+    .p4-logo { color: #d4af37; }
+    .p4-nav a { color: #a3a3a3; }
+    .p4-nav a:hover { color: #d4af37; }
+    .p4-hero { background: linear-gradient(135deg, #0a0a0a 0%, #1f1f1f 100%); color: white; }
+    .p4-hero h2 { color: #d4af37; }
+    .p4-btn-primary { background: #d4af37; color: #0a0a0a; }
+    .p4-btn-primary:hover { background: #e5c04a; }
+    .p4-btn-secondary { background: transparent; border: 2px solid #d4af37; color: #d4af37; }
+    .p4-cards { background: #faf9f6; }
+    .p4-card { background: white; box-shadow: 0 2px 15px rgba(0,0,0,0.08); }
+    .p4-card h3 { color: #0a0a0a; }
+    .p4-card p { color: #525252; }
+    .p4-footer { background: #0a0a0a; color: #a3a3a3; }
+    .p4-swatches { background: #1f1f1f; }
+    .p4-swatches .swatch { color: white; }
+
+    /* ===== PALETA 5: Verde + Creme ===== */
+    .p5-label { background: #1e3a2f; }
+    .p5-header { background: #fdfbf7; border-bottom: 1px solid #e8d5b5; }
+    .p5-logo { color: #1e3a2f; }
+    .p5-nav a { color: #6b5d4d; }
+    .p5-nav a:hover { color: #1e3a2f; }
+    .p5-hero { background: linear-gradient(135deg, #1e3a2f 0%, #2d4a3f 100%); color: white; }
+    .p5-btn-primary { background: #e8d5b5; color: #1e3a2f; }
+    .p5-btn-primary:hover { background: #f0e0c5; }
+    .p5-btn-secondary { background: transparent; border: 2px solid rgba(255,255,255,0.4); color: white; }
+    .p5-cards { background: #fdfbf7; }
+    .p5-card { background: white; border: 1px solid #e8d5b5; }
+    .p5-card h3 { color: #1e3a2f; }
+    .p5-card p { color: #6b5d4d; }
+    .p5-footer { background: #1e3a2f; color: rgba(255,255,255,0.7); }
+    .p5-swatches { background: #fdfbf7; }
+
+    /* ===== PALETA 6: Bordô + Bege ===== */
+    .p6-label { background: #722f37; }
+    .p6-header { background: #faf6f0; border-bottom: 1px solid #d4c4a8; }
+    .p6-logo { color: #722f37; }
+    .p6-nav a { color: #5c4a3d; }
+    .p6-nav a:hover { color: #722f37; }
+    .p6-hero { background: linear-gradient(135deg, #722f37 0%, #8a3a44 100%); color: white; }
+    .p6-btn-primary { background: #d4c4a8; color: #722f37; }
+    .p6-btn-primary:hover { background: #e0d4bc; }
+    .p6-btn-secondary { background: transparent; border: 2px solid rgba(255,255,255,0.4); color: white; }
+    .p6-cards { background: #faf6f0; }
+    .p6-card { background: white; border: 1px solid #d4c4a8; }
+    .p6-card h3 { color: #722f37; }
+    .p6-card p { color: #5c4a3d; }
+    .p6-footer { background: #4a1c22; color: rgba(255,255,255,0.7); }
+    .p6-swatches { background: #faf6f0; }
+
+    @media (max-width: 768px) {
+      .demo-cards { grid-template-columns: 1fr; }
+      .demo-nav { display: none; }
+      .demo-hero h2 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="intro">
+      <h1>Demonstração de Paletas</h1>
+      <p>Compare as 6 opções de identidade visual para o site Pagni & Golegã</p>
+    </div>
+
+    <!-- PALETA 1 -->
+    <div class="palette-section">
+      <div class="palette-label p1-label">
+        Opção 1: Azul Naval + Dourado
+        <span>Recomendada - Clássico Premium</span>
+      </div>
+      <header class="demo-header p1-header">
+        <div class="demo-logo p1-logo">Pagni & Golegã</div>
+        <nav class="demo-nav">
+          <a href="#" class="p1-nav">Home</a>
+          <a href="#" class="p1-nav">Sobre</a>
+          <a href="#" class="p1-nav">Áreas de Atuação</a>
+          <a href="#" class="p1-nav">Blog</a>
+          <a href="#" class="p1-nav">Contato</a>
+        </nav>
+      </header>
+      <section class="demo-hero p1-hero">
+        <h2>Consultoria Jurídica e Advocacia</h2>
+        <p>Atendimento especializado em São Paulo</p>
+        <a href="#" class="demo-btn p1-btn-primary">Fale Conosco</a>
+        <a href="#" class="demo-btn p1-btn-secondary">Áreas de Atuação</a>
+      </section>
+      <section class="demo-cards p1-cards">
+        <div class="demo-card p1-card">
+          <h3>Família e Sucessões</h3>
+          <p>Divórcio, guarda, inventário e partilha de bens.</p>
+        </div>
+        <div class="demo-card p1-card">
+          <h3>Direito à Saúde</h3>
+          <p>Planos de saúde, negativas de cobertura.</p>
+        </div>
+        <div class="demo-card p1-card">
+          <h3>Criminal</h3>
+          <p>Defesa criminal e habeas corpus.</p>
+        </div>
+      </section>
+      <footer class="demo-footer p1-footer">
+        © 2026 Pagni & Golegã. Todos os direitos reservados.
+      </footer>
+      <div class="swatches p1-swatches">
+        <div class="swatch"><div class="swatch-color" style="background:#1a2a5e"></div>#1a2a5e Naval</div>
+        <div class="swatch"><div class="swatch-color" style="background:#c9a227"></div>#c9a227 Dourado</div>
+        <div class="swatch"><div class="swatch-color" style="background:#6b7280"></div>#6b7280 Cinza</div>
+        <div class="swatch"><div class="swatch-color" style="background:#f5f5f5"></div>#f5f5f5 Fundo</div>
+      </div>
+    </div>
+
+    <!-- PALETA 2 -->
+    <div class="palette-section">
+      <div class="palette-label p2-label">
+        Opção 2: Azul Naval + Prata
+        <span>Fiel ao Logo Atual</span>
+      </div>
+      <header class="demo-header p2-header">
+        <div class="demo-logo p2-logo">Pagni & Golegã</div>
+        <nav class="demo-nav">
+          <a href="#" class="p2-nav">Home</a>
+          <a href="#" class="p2-nav">Sobre</a>
+          <a href="#" class="p2-nav">Áreas de Atuação</a>
+          <a href="#" class="p2-nav">Blog</a>
+          <a href="#" class="p2-nav">Contato</a>
+        </nav>
+      </header>
+      <section class="demo-hero p2-hero">
+        <h2>Consultoria Jurídica e Advocacia</h2>
+        <p>Atendimento especializado em São Paulo</p>
+        <a href="#" class="demo-btn p2-btn-primary">Fale Conosco</a>
+        <a href="#" class="demo-btn p2-btn-secondary">Áreas de Atuação</a>
+      </section>
+      <section class="demo-cards p2-cards">
+        <div class="demo-card p2-card">
+          <h3>Família e Sucessões</h3>
+          <p>Divórcio, guarda, inventário e partilha de bens.</p>
+        </div>
+        <div class="demo-card p2-card">
+          <h3>Direito à Saúde</h3>
+          <p>Planos de saúde, negativas de cobertura.</p>
+        </div>
+        <div class="demo-card p2-card">
+          <h3>Criminal</h3>
+          <p>Defesa criminal e habeas corpus.</p>
+        </div>
+      </section>
+      <footer class="demo-footer p2-footer">
+        © 2026 Pagni & Golegã. Todos os direitos reservados.
+      </footer>
+      <div class="swatches p2-swatches">
+        <div class="swatch"><div class="swatch-color" style="background:#1a2a5e"></div>#1a2a5e Naval</div>
+        <div class="swatch"><div class="swatch-color" style="background:#9ca3af"></div>#9ca3af Prata</div>
+        <div class="swatch"><div class="swatch-color" style="background:#64748b"></div>#64748b Cinza</div>
+        <div class="swatch"><div class="swatch-color" style="background:#f8fafc"></div>#f8fafc Fundo</div>
+      </div>
+    </div>
+
+    <!-- PALETA 3 -->
+    <div class="palette-section">
+      <div class="palette-label p3-label">
+        Opção 3: Azul Naval + Esmeralda
+        <span>Moderno e Diferenciado</span>
+      </div>
+      <header class="demo-header p3-header">
+        <div class="demo-logo p3-logo">Pagni & Golegã</div>
+        <nav class="demo-nav">
+          <a href="#" class="p3-nav">Home</a>
+          <a href="#" class="p3-nav">Sobre</a>
+          <a href="#" class="p3-nav">Áreas de Atuação</a>
+          <a href="#" class="p3-nav">Blog</a>
+          <a href="#" class="p3-nav">Contato</a>
+        </nav>
+      </header>
+      <section class="demo-hero p3-hero">
+        <h2>Consultoria Jurídica e Advocacia</h2>
+        <p>Atendimento especializado em São Paulo</p>
+        <a href="#" class="demo-btn p3-btn-primary">Fale Conosco</a>
+        <a href="#" class="demo-btn p3-btn-secondary">Áreas de Atuação</a>
+      </section>
+      <section class="demo-cards p3-cards">
+        <div class="demo-card p3-card">
+          <h3>Família e Sucessões</h3>
+          <p>Divórcio, guarda, inventário e partilha de bens.</p>
+        </div>
+        <div class="demo-card p3-card">
+          <h3>Direito à Saúde</h3>
+          <p>Planos de saúde, negativas de cobertura.</p>
+        </div>
+        <div class="demo-card p3-card">
+          <h3>Criminal</h3>
+          <p>Defesa criminal e habeas corpus.</p>
+        </div>
+      </section>
+      <footer class="demo-footer p3-footer">
+        © 2026 Pagni & Golegã. Todos os direitos reservados.
+      </footer>
+      <div class="swatches p3-swatches">
+        <div class="swatch"><div class="swatch-color" style="background:#1a2a5e"></div>#1a2a5e Naval</div>
+        <div class="swatch"><div class="swatch-color" style="background:#047857"></div>#047857 Esmeralda</div>
+        <div class="swatch"><div class="swatch-color" style="background:#6b7280"></div>#6b7280 Cinza</div>
+        <div class="swatch"><div class="swatch-color" style="background:#f0fdf4"></div>#f0fdf4 Fundo</div>
+      </div>
+    </div>
+
+    <!-- PALETA 4 -->
+    <div class="palette-section">
+      <div class="palette-label p4-label">
+        Opção 4: Preto + Dourado
+        <span>Luxo Contemporâneo</span>
+      </div>
+      <header class="demo-header p4-header">
+        <div class="demo-logo p4-logo">Pagni & Golegã</div>
+        <nav class="demo-nav">
+          <a href="#" class="p4-nav">Home</a>
+          <a href="#" class="p4-nav">Sobre</a>
+          <a href="#" class="p4-nav">Áreas de Atuação</a>
+          <a href="#" class="p4-nav">Blog</a>
+          <a href="#" class="p4-nav">Contato</a>
+        </nav>
+      </header>
+      <section class="demo-hero p4-hero">
+        <h2>Consultoria Jurídica e Advocacia</h2>
+        <p>Atendimento especializado em São Paulo</p>
+        <a href="#" class="demo-btn p4-btn-primary">Fale Conosco</a>
+        <a href="#" class="demo-btn p4-btn-secondary">Áreas de Atuação</a>
+      </section>
+      <section class="demo-cards p4-cards">
+        <div class="demo-card p4-card">
+          <h3>Família e Sucessões</h3>
+          <p>Divórcio, guarda, inventário e partilha de bens.</p>
+        </div>
+        <div class="demo-card p4-card">
+          <h3>Direito à Saúde</h3>
+          <p>Planos de saúde, negativas de cobertura.</p>
+        </div>
+        <div class="demo-card p4-card">
+          <h3>Criminal</h3>
+          <p>Defesa criminal e habeas corpus.</p>
+        </div>
+      </section>
+      <footer class="demo-footer p4-footer">
+        © 2026 Pagni & Golegã. Todos os direitos reservados.
+      </footer>
+      <div class="swatches p4-swatches">
+        <div class="swatch"><div class="swatch-color" style="background:#0a0a0a"></div>#0a0a0a Preto</div>
+        <div class="swatch"><div class="swatch-color" style="background:#d4af37"></div>#d4af37 Dourado</div>
+        <div class="swatch"><div class="swatch-color" style="background:#a3a3a3"></div>#a3a3a3 Cinza</div>
+        <div class="swatch"><div class="swatch-color" style="background:#faf9f6"></div>#faf9f6 Creme</div>
+      </div>
+    </div>
+
+    <!-- PALETA 5 -->
+    <div class="palette-section">
+      <div class="palette-label p5-label">
+        Opção 5: Verde Floresta + Creme
+        <span>Elegância Natural</span>
+      </div>
+      <header class="demo-header p5-header">
+        <div class="demo-logo p5-logo">Pagni & Golegã</div>
+        <nav class="demo-nav">
+          <a href="#" class="p5-nav">Home</a>
+          <a href="#" class="p5-nav">Sobre</a>
+          <a href="#" class="p5-nav">Áreas de Atuação</a>
+          <a href="#" class="p5-nav">Blog</a>
+          <a href="#" class="p5-nav">Contato</a>
+        </nav>
+      </header>
+      <section class="demo-hero p5-hero">
+        <h2>Consultoria Jurídica e Advocacia</h2>
+        <p>Atendimento especializado em São Paulo</p>
+        <a href="#" class="demo-btn p5-btn-primary">Fale Conosco</a>
+        <a href="#" class="demo-btn p5-btn-secondary">Áreas de Atuação</a>
+      </section>
+      <section class="demo-cards p5-cards">
+        <div class="demo-card p5-card">
+          <h3>Família e Sucessões</h3>
+          <p>Divórcio, guarda, inventário e partilha de bens.</p>
+        </div>
+        <div class="demo-card p5-card">
+          <h3>Direito à Saúde</h3>
+          <p>Planos de saúde, negativas de cobertura.</p>
+        </div>
+        <div class="demo-card p5-card">
+          <h3>Criminal</h3>
+          <p>Defesa criminal e habeas corpus.</p>
+        </div>
+      </section>
+      <footer class="demo-footer p5-footer">
+        © 2026 Pagni & Golegã. Todos os direitos reservados.
+      </footer>
+      <div class="swatches p5-swatches">
+        <div class="swatch"><div class="swatch-color" style="background:#1e3a2f"></div>#1e3a2f Verde</div>
+        <div class="swatch"><div class="swatch-color" style="background:#e8d5b5"></div>#e8d5b5 Creme</div>
+        <div class="swatch"><div class="swatch-color" style="background:#6b5d4d"></div>#6b5d4d Marrom</div>
+        <div class="swatch"><div class="swatch-color" style="background:#fdfbf7"></div>#fdfbf7 Fundo</div>
+      </div>
+    </div>
+
+    <!-- PALETA 6 -->
+    <div class="palette-section">
+      <div class="palette-label p6-label">
+        Opção 6: Bordô + Bege
+        <span>Tradição Sofisticada</span>
+      </div>
+      <header class="demo-header p6-header">
+        <div class="demo-logo p6-logo">Pagni & Golegã</div>
+        <nav class="demo-nav">
+          <a href="#" class="p6-nav">Home</a>
+          <a href="#" class="p6-nav">Sobre</a>
+          <a href="#" class="p6-nav">Áreas de Atuação</a>
+          <a href="#" class="p6-nav">Blog</a>
+          <a href="#" class="p6-nav">Contato</a>
+        </nav>
+      </header>
+      <section class="demo-hero p6-hero">
+        <h2>Consultoria Jurídica e Advocacia</h2>
+        <p>Atendimento especializado em São Paulo</p>
+        <a href="#" class="demo-btn p6-btn-primary">Fale Conosco</a>
+        <a href="#" class="demo-btn p6-btn-secondary">Áreas de Atuação</a>
+      </section>
+      <section class="demo-cards p6-cards">
+        <div class="demo-card p6-card">
+          <h3>Família e Sucessões</h3>
+          <p>Divórcio, guarda, inventário e partilha de bens.</p>
+        </div>
+        <div class="demo-card p6-card">
+          <h3>Direito à Saúde</h3>
+          <p>Planos de saúde, negativas de cobertura.</p>
+        </div>
+        <div class="demo-card p6-card">
+          <h3>Criminal</h3>
+          <p>Defesa criminal e habeas corpus.</p>
+        </div>
+      </section>
+      <footer class="demo-footer p6-footer">
+        © 2026 Pagni & Golegã. Todos os direitos reservados.
+      </footer>
+      <div class="swatches p6-swatches">
+        <div class="swatch"><div class="swatch-color" style="background:#722f37"></div>#722f37 Bordô</div>
+        <div class="swatch"><div class="swatch-color" style="background:#d4c4a8"></div>#d4c4a8 Bege</div>
+        <div class="swatch"><div class="swatch-color" style="background:#5c4a3d"></div>#5c4a3d Marrom</div>
+        <div class="swatch"><div class="swatch-color" style="background:#faf6f0"></div>#faf6f0 Fundo</div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

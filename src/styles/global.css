@@ -1,0 +1,65 @@
+/* Google Fonts - deve vir primeiro */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+/* Paleta: Azul Naval + Prata */
+:root {
+  /* Cores principais */
+  --color-primary: #1a2a5e;
+  --color-primary-light: #2d3a6e;
+  --color-primary-dark: #0f172a;
+
+  /* Prata/Cinza */
+  --color-silver: #9ca3af;
+  --color-silver-dark: #6b7280;
+  --color-silver-light: #d1d5db;
+
+  /* Neutros */
+  --color-gray-50: #f8fafc;
+  --color-gray-100: #f1f5f9;
+  --color-gray-200: #e2e8f0;
+  --color-gray-600: #64748b;
+  --color-gray-900: #0f172a;
+
+  /* Branco */
+  --color-white: #ffffff;
+
+  /* Tipografia */
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Base */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-gray-900);
+  background-color: var(--color-white);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+/* Links */
+a {
+  transition: color 0.2s ease;
+}
+
+/* Focus states para acessibilidade */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Utilitários customizados */
+.text-primary { color: var(--color-primary); }
+.text-silver { color: var(--color-silver); }
+.bg-primary { background-color: var(--color-primary); }
+.bg-silver { background-color: var(--color-silver); }
+.border-silver { border-color: var(--color-silver); }
