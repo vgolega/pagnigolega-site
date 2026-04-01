@@ -4,10 +4,86 @@ import '../styles/global.css'
 interface Props {
   title: string
   description?: string
+  ogType?: string
+  ogImage?: string
+  schema?: Record<string, any> | Record<string, any>[]
 }
 
-const { title, description = 'Pagni & Golegã - Consultoria Jurídica e Advocacia em São Paulo' } = Astro.props
+const {
+  title,
+  description = 'Pagni & Golegã - Consultoria Jurídica e Advocacia em São Paulo',
+  ogType = 'website',
+  ogImage = '/images/P&G.jpg',
+  schema,
+} = Astro.props
+
 const siteTitle = `${title} | Pagni & Golegã`
+const siteUrl = 'https://www.pagnigolega.com.br'
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href
+const ogImageUrl = new URL(ogImage, siteUrl).href
+
+// Schema padrão: Organization (presente em todas as páginas)
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LegalService',
+  '@id': `${siteUrl}/#organization`,
+  name: 'Pagni & Golegã Consultoria Jurídica e Advocacia',
+  url: siteUrl,
+  logo: `${siteUrl}/images/P&G.jpg`,
+  image: `${siteUrl}/images/P&G.jpg`,
+  description: 'Escritório de advocacia em São Paulo especializado em Família e Sucessões, Planejamento Sucessório, Direito à Saúde, Consumidor, Trabalhista e Criminal.',
+  telephone: '+5511937305492',
+  areaServed: {
+    '@type': 'State',
+    name: 'São Paulo',
+    '@id': 'https://www.wikidata.org/wiki/Q175',
+  },
+  address: {
+    '@type': 'PostalAddress',
+    addressRegion: 'SP',
+    addressCountry: 'BR',
+  },
+  sameAs: [
+    'https://www.pagnigolega.com.br',
+  ],
+  knowsAbout: [
+    'Direito de Família',
+    'Direito Sucessório',
+    'Planejamento Sucessório',
+    'Direito à Saúde',
+    'Direito do Consumidor',
+    'Direito Trabalhista',
+    'Direito Criminal',
+  ],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Serviços Jurídicos',
+    itemListElement: [
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Família e Sucessões', description: 'Divórcio, guarda, inventário, partilha de bens e testamentos.' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Planejamento Sucessório', description: 'Holding familiar, doações, testamentos e proteção patrimonial.' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Direito à Saúde', description: 'Planos de saúde, negativas de cobertura e tratamentos.' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Direito do Consumidor', description: 'Relações de consumo, contratos abusivos e cobranças indevidas.' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Direito Trabalhista', description: 'Direitos do trabalhador, rescisões e verbas trabalhistas.' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Direito Criminal', description: 'Defesa criminal, habeas corpus e acompanhamento processual.' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Serviços Extrajudiciais', description: 'Divórcio em cartório, reconhecimento de paternidade, pacto antenupcial e procedimentos extrajudiciais.' } },
+    ],
+  },
+}
+
+// WebSite schema (ajuda motores de busca e IA a entender a estrutura)
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${siteUrl}/#website`,
+  url: siteUrl,
+  name: 'Pagni & Golegã',
+  description: 'Consultoria Jurídica e Advocacia em São Paulo',
+  publisher: { '@id': `${siteUrl}/#organization` },
+  inLanguage: 'pt-BR',
+}
+
+// Combinar schemas
+const allSchemas = [organizationSchema, websiteSchema, ...(Array.isArray(schema) ? schema : schema ? [schema] : [])]
 ---
 
 <!doctype html>
@@ -17,15 +93,31 @@ const siteTitle = `${title} | Pagni & Golegã`
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="canonical" href={canonicalUrl} />
 
     <!-- Open Graph -->
     <meta property="og:title" content={siteTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:locale" content="pt_BR" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="Pagni & Golegã" />
+    <meta property="og:image" content={ogImageUrl} />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={siteTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- JSON-LD Structured Data -->
+    {allSchemas.map((s) => (
+      <script type="application/ld+json" set:html={JSON.stringify(s)} />
+    ))}
 
     <title>{siteTitle}</title>
   </head>

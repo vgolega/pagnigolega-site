@@ -23,9 +23,33 @@ const formattedDate = pubDate.toLocaleDateString('pt-BR', {
 const whatsappNumber = '5511937305492'
 const whatsappMessage = encodeURIComponent(`Olá! Li o artigo "${title}" no site e gostaria de mais informações.`)
 const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`
+
+const siteUrl = 'https://www.pagnigolega.com.br'
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: description,
+  datePublished: pubDate.toISOString(),
+  dateModified: pubDate.toISOString(),
+  author: {
+    '@type': 'Person',
+    name: author,
+  },
+  publisher: {
+    '@id': `${siteUrl}/#organization`,
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': new URL(Astro.url.pathname, siteUrl).href,
+  },
+  ...(image ? { image: new URL(image, siteUrl).href } : {}),
+  ...(tags ? { keywords: tags.join(', ') } : {}),
+  inLanguage: 'pt-BR',
+}
 ---
 
-<Base title={title} description={description}>
+<Base title={title} description={description} ogType="article" ogImage={image} schema={articleSchema}>
   <Header />
 
   <main class="flex-1">
