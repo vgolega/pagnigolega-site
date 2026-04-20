@@ -51,18 +51,12 @@ const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`
 
   <main class="flex-1">
     <!-- Hero Section -->
-    <section class="bg-gradient-to-br from-[#1a2a5e] to-[#2d3a6e] text-white py-20 md:py-32">
+    <section class="bg-gradient-to-br from-[#1a2a5e] to-[#2d3a6e] text-white py-10 md:py-14">
       <div class="max-w-6xl mx-auto px-4">
         <div class="max-w-3xl">
-          <h1 class="text-5xl md:text-6xl lg:text-7xl font-serif font-bold mb-4 leading-tight tracking-wide">
-            Pagni & Golegã
-          </h1>
-          <p class="text-xl md:text-2xl text-slate-300 mb-4 font-serif">
-            Consultoria Jurídica e Advocacia
-          </p>
-          <p class="text-lg text-slate-400 mb-8 max-w-xl">
+          <h1 class="text-lg md:text-xl lg:text-2xl font-serif font-normal mb-8 leading-relaxed max-w-2xl text-slate-200">
             Atendimento especializado para pessoas físicas e jurídicas em todo o Estado de São Paulo.
-          </p>
+          </h1>
           <div class="flex flex-col sm:flex-row gap-4">
             <a
               href={whatsappLink}
@@ -114,11 +108,13 @@ const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`
             </a>
           </div>
           <div class="flex justify-center">
-            <img
-              src="/images/P&G.jpg"
-              alt="Pagni & Golegã"
-              class="max-w-sm w-full rounded-lg shadow-lg"
-            />
+            <div class="w-full max-w-sm aspect-[4/5] overflow-hidden rounded-full shadow-lg bg-slate-100">
+              <img
+                src="/images/biblioteca-mackenzie.png"
+                alt="Biblioteca da Universidade Presbiteriana Mackenzie"
+                class="w-full h-full object-cover"
+              />
+            </div>
           </div>
         </div>
       </div>
