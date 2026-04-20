@@ -29,8 +29,8 @@ const organizationSchema = {
   '@id': `${siteUrl}/#organization`,
   name: 'Pagni & Golegã Consultoria Jurídica e Advocacia',
   url: siteUrl,
-  logo: `${siteUrl}/images/P&G.jpg`,
-  image: `${siteUrl}/images/P&G.jpg`,
+  logo: `${siteUrl}/favicon.png`,
+  image: `${siteUrl}/favicon.png`,
   description: 'Escritório de advocacia em São Paulo especializado em Família e Sucessões, Planejamento Sucessório, Direito à Saúde, Consumidor, Trabalhista e Criminal.',
   telephone: '+5511937305492',
   areaServed: {
@@ -112,7 +112,8 @@ const allSchemas = [organizationSchema, websiteSchema, ...(Array.isArray(schema)
     <meta name="twitter:image" content={ogImageUrl} />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <!-- JSON-LD Structured Data -->
